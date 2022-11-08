@@ -17,7 +17,6 @@ exports.register = async(req,res,next)=>{
             error:error.message
         })
     }
-
 };
 exports.login = (req,res,next)=>{
     res.send("login route")
