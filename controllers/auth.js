@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const ErrorResponse = require('../utils/errorResponse')
 exports.register = async(req,res,next)=>{
     const {username , email , password }= req.body;
     try {
@@ -21,10 +22,8 @@ exports.register = async(req,res,next)=>{
 exports.login = async (req,res,next)=> {
     const {email, password} = req.body
     if(!email || !password){
-        res.status(400).json({
-            succes:false,
-            error: " Please provide email and password"
-        })}
+       return next(new ErrorResponse('mot de passe ola email makaynch ',400))
+    }
         try {
             const user = await User.findOne({email}).select("password")
             if(!user){
