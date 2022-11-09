@@ -8,41 +8,28 @@ exports.register = async(req,res,next)=>{
             email,
             password
         });
-        res.status(201).json({
-            succes: true,
-            user
-        })
+        sendToken(user,201,res)
     } catch (error) {
-        res.status(500).json({
-            succes:false,
-            error:error.message
-        })
+      next(error)
     }
 };
 exports.login = async (req,res,next)=> {
     const {email, password} = req.body
     if(!email || !password){
-       return next(new ErrorResponse('mot de passe ola email makaynch ',400))
+       return next(new ErrorResponse('Please Provid email and passworrd  ',400))
     }
         try {
             const user = await User.findOne({email}).select("password")
             if(!user){
-                res.status(404).json({
-                    succes:false,
-                    error: "Invalid credentials"
-                })
+                return next(new ErrorResponse('invalid Credentials',401))
+
             }
             const isMatch = await user.matchPasswords(password);
             if(!isMatch){
-                res.status(404).json({
-                sucees:false,
-                error: "Invalid credentials"
-                })
+                return next(new ErrorResponse('invalid Credentials ',401))
+
             }
-            res.status(200).json({
-                succes:true,
-                token:"trhdkcdjclc"
-            });
+           sendToken(user,200,res)
         } catch (error) {
             res.status(500).json({
                 succes:false,
@@ -51,6 +38,10 @@ exports.login = async (req,res,next)=> {
         }
     
 };
+const sendToken = (user,statusCode,res) =>{
+    const token = user.getSignedToken(user)
+    res.status(statusCode).json({succes:true , token})
+}
 exports.forgotpassword = (req,res,next)=>{
     res.send("forgot password route")
 };
