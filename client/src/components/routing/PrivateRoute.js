@@ -1,4 +1,5 @@
-import {redirect , Route} from 'react-router-dom'
+import  {Route} from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 //Routing
 const PrivateRoute = ({component: Component, ...rest}) => {
   return (
@@ -6,8 +7,8 @@ const PrivateRoute = ({component: Component, ...rest}) => {
         {...rest}
         Render ={(props)=>
             localStorage.getItem("authToken") ? 
-           ( <Component {...props} /> ) : (
-            <redirect to="/login" />
+           ( <Component {...props} /> ) : ( 
+            <Navigate to="/login" />
             )
         }
         />

@@ -1,15 +1,20 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import "./RegisterScreen.css"
 
 const RegisterScreen = ({history}) => {
-
+    const navigate = useNavigate()
     const [username,setUsername]=useState("")
     const [email,setEmail] = useState("")
     const [password,setPassword]=useState("")
     const [confirmpassword,setConfirmpassword]=useState("")
     const [error,setError]=useState("");
+ 
+    useEffect(()=>{
+        if(localStorage.getItem("authToken")) {
+            navigate('/')
+         }})
 
     const registerHandler =async (e) =>{
         e.preventDefault();
@@ -28,9 +33,9 @@ const RegisterScreen = ({history}) => {
         return setError("Passwords de not match")
         }
 try {
-    const { data } = await axios.post("/api/auth/register",{username,email,password},config);
+    const { data } = await axios.post("http://localhost:3700/api/auth/register",{username,email,password},config);
     localStorage.setItem("authToken",data.token)
-    history.push('/')
+    navigate('/login')
 } catch (error) {
     setError(error.response.data.error)
     setTimeout(()=>{

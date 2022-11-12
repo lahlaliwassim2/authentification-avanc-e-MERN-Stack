@@ -1,18 +1,18 @@
 import {useState,useEffect} from 'react'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import "./LoginScreen.css"
 
-const LoginScreen = ({history}) => {
-
+const LoginScreen = () => {
+    const navigate = useNavigate()
     const [email,setEmail] = useState("")
     const [password,setPassword]=useState("")
     const [error,setError]=useState("");
 
     useEffect(()=>{
         if(localStorage.getItem("authToken")) {
-            history.push('/')
-         }} ,[history])
+            navigate('/')
+         }})
 
 
     const loginHandler =async (e) =>{
@@ -23,11 +23,11 @@ const LoginScreen = ({history}) => {
                 "Content-Type": "application/json"
             }
         }
-       
 try {
-    const { data } = await axios.post("/api/auth/login",{email,password},config);
-    localStorage.setItem("authToken",data.token)
-    history.push('/')
+    const { data } = await axios.post("http://localhost:3700/api/auth/login",{email,password},config);
+    console.log('hello');
+    localStorage.setItem("authToken", data.token)
+    navigate('/')
 } catch (error) {
     setError(error.response.data.error)
     setTimeout(()=>{
