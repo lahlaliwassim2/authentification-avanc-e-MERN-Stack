@@ -23,7 +23,7 @@ exports.protect = async (req,res,next)=>{
             return next( new ErrorResponse("No User fond with this id ",404))
         }
         req.user = user
-        next()
+        return next()
     } catch (error) {
         return next( new ErrorResponse("Not authorized to acces with this route"))
     }

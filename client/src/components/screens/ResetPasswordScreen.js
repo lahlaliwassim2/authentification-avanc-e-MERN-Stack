@@ -4,7 +4,7 @@ import axios from "axios";
 
 import "./ResetPasswordScreen.css";
 
-const ResetPasswordScreen = ({ history, match }) => {
+const ResetPasswordScreen = ({ match }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +30,7 @@ const ResetPasswordScreen = ({ history, match }) => {
 
     try {
       const { data } = await axios.put(
-        `http:localhost:3700/api/auth/passwordreset/${match.params.resetToken}`,
+        `http:localhost://3700/api/auth/passwordreset/${match.params.resetToken}`,
         {
           password,
         },

@@ -13,12 +13,13 @@ const ForgotPasswordScreen = () => {
     const config = {
       header: {
         "Content-Type": "application/json",
+        
       },
     };
 
     try {
       const { data } = await axios.post(
-        "http:localhost:3700/api/auth/forgotpassword",
+        "http://localhost:3700/api/auth/forgotpassword",
         { email },
         config
       );

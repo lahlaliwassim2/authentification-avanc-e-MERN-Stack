@@ -25,7 +25,6 @@ const LoginScreen = () => {
         }
 try {
     const { data } = await axios.post("http://localhost:3700/api/auth/login",{email,password},config);
-    console.log('hello');
     localStorage.setItem("authToken", data.token)
     navigate('/')
 } catch (error) {
@@ -40,11 +39,12 @@ try {
 
     return (
  <div className='login-screen'>
-    <form onSubmit={loginHandler} className='login-screen_form'>
+    <form onSubmit={loginHandler} className='login-screen__form'>
         <h3 className='login-screen-title'>login</h3>
         { error && <span className='error-message'>{error}</span>}
        
         <div className='form-group'>
+
         <label htmlFor='name'>Email:</label>
         <input type="email" required id="email" placeholder='Enter email' value={email} 
          onChange={(e) => setEmail(e.target.value)}/>
@@ -52,6 +52,9 @@ try {
 
         <div className='form-group'>
         <label htmlFor='password'>password:</label>
+        <Link to="/forgotpassword" className="login-screen__forgotpassword">
+        Forgot Password?
+            </Link>
         <input type="password" required id="password" placeholder='Enter password' value={password} 
          onChange={(e) => setPassword(e.target.value)}/>
         </div>

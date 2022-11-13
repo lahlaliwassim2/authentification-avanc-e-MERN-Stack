@@ -48,7 +48,7 @@ try {
 
     return (
  <div className='register-screen'>
-    <form onSubmit={registerHandler} className='register-screen_form'>
+    <form onSubmit={registerHandler} className='register-screen__form'>
         <h3 className='register-screen-title'>Register</h3>
         {error && <span className='error-message'>{error}</span>}
         <div className='form-group'>
