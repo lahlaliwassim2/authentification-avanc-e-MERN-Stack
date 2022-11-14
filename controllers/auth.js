@@ -3,12 +3,13 @@ const ErrorResponse = require('../utils/errorResponse');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto')
 exports.register = async(req,res,next)=>{
-    const {username , email , password }= req.body;
+    const {role,username , email , password }= req.body;
     try {
         const user = await User.create({
             username,
             email,
-            password
+            password,
+            role:"CLIENT"
         });
         sendToken(user,201,res)
     } catch (error) {
@@ -31,6 +32,7 @@ exports.login = async (req,res,next)=> {
                 return next(new ErrorResponse('invalid Credentials ',401))
 
             }
+            
            sendToken(user,200,res)
         } catch (error) {
             res.status(500).json({
@@ -81,6 +83,7 @@ exports.forgotpassword =async (req,res,next)=>{
 };
 exports.resetPassword = async (req, res, next) => {
     // Compare token in URL params to hashed token
+   
     const resetPasswordToken = crypto
       .createHash("sha256")
       .update(req.params.resetToken)
