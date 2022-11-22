@@ -5,12 +5,17 @@ const PrivateScreen = () => {
     const navigate = useNavigate()
     const [error,setError]=useState("")
     const [privateData,setPrivateData]=useState("")
+    const [role,setRole]=useState("")
 
     useEffect(()=>{
-        // if(!localStorage.getItem("authToken")) {
-        //     navigate('/login')
-        //     return
-        // }
+        if(localStorage.getItem("user")==="ADMIN") {
+            setRole("ADMIN")
+            
+        }else if(localStorage.getItem("user")==="LIVREUR"){
+            setRole("LIVREUR")
+        }else{
+            setRole("CLIENT")
+        }
         const fetchPrivateData = async () =>{
             const config = {
                 headers: {
@@ -38,8 +43,10 @@ const PrivateScreen = () => {
   return (
     <>
   { error ? <spane className="error-message" >{error}</spane> : <>
-    <div style={{background: "green", color: "white"}}>{privateData}</div>
+    
+    <div style={{background: "green", color: "white"}}>{privateData} and  {role} pages</div>
     <button onClick={logoutHandler}>Logout</button>
+    
     </>
     }
    </>

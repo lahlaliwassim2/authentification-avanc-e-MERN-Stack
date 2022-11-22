@@ -5,7 +5,7 @@ import "./NotFoundScreen.css"
 function NotFoundScreen() {
   return (
     <div className='notFound'>
-      <img src={NotFound}/>
+      <img src= {NotFound}  alt=""/>
     </div>
  )
 }

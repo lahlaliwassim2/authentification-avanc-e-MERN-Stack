@@ -1,26 +1,41 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import axios from 'axios'
-import {Link } from 'react-router-dom'
+// import {Link } from 'react-router-dom'
 import './AdminScreen.css'
-
+import { useNavigate } from 'react-router-dom'
 const AdminScreen = () =>{
-  const [username,setUsername]=useState("")
-  const [email,setEmail] = useState("")
-  const [password,setPassword]=useState("")
-  const [error,setError]=useState("");
+    const [username,setUsername]=useState("")
+    const [email,setEmail] = useState("")
+    const [password,setPassword]=useState("")
+    const [error,setError]=useState("");
+    const [privateData,setPrivateData]=useState("")
+
+    const navigate = useNavigate()
+    useEffect(()=>{
+      if(!localStorage.getItem("authToken")) {
+          navigate('/login')
+       }
+      else if(localStorage.getItem("user")!=="ADMIN") {
+        navigate('/')
+     }else if(localStorage.getItem("user")==="ADMIN"){
+      navigate('/addlivreur')
+     }}, [])
 const AddLivreurHandler = async (e)=>{
 
-  e.preventDefault()
+    e.preventDefault()
 
-  const config = {
-    header : {
-      "Content-Type": "application/json"
-  }
+    const config = {
+      headers : {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`
+        
+    }
 
   }
   try {
     const {data} = await axios.post("http://localhost:3700/api/addlivreur",{username,email,password},config)
-    console.log(data)
+    setPrivateData(data.data)
+    console.log(data);
   } catch (error) {
     setError(error.response.data.error)
     setTimeout(()=>{
@@ -58,11 +73,9 @@ const AddLivreurHandler = async (e)=>{
 
        
         <button type='submit' className='btn btn-primary'>
-            Register
+            Add Livreur 
         </button>
-        <span className='register-screen__subtext'>
-            Already have an accuont ? <Link to="/login">Login</Link>
-        </span>
+       
     </form>
 </div>
       )

@@ -19,20 +19,19 @@ exports.register = async(req,res,next)=>{
 exports.login = async (req,res,next)=> {
     const {email, password} = req.body
     if(!email || !password){
-       return next(new ErrorResponse('Please Provid email and passworrd  ',400))
+       return next(new ErrorResponse('Please Provid email and passworrd',400))
     }
         try {
-            const user = await User.findOne({email}).select("password")
+            const user = await User.findOne({email})
             if(!user){
                 return next(new ErrorResponse('invalid Credentials',401))
-
             }
             const isMatch = await user.matchPasswords(password);
             if(!isMatch){
-                return next(new ErrorResponse('invalid Credentials ',401))
+                return next(new ErrorResponse('invalid Credentials',401))
 
             }
-            
+            console.log(user);
            sendToken(user,200,res)
         } catch (error) {
             res.status(500).json({
@@ -113,8 +112,11 @@ exports.resetPassword = async (req, res, next) => {
     } catch (err) {
       next(err);
     }
-  };
+  }; 
   const sendToken = (user,statusCode,res) =>{
     const token = user.getSignedToken(user)
-    res.status(statusCode).json({succes:true , token})
+    const role = user.role
+    console.log(role);
+    res.status(statusCode).json({succes:true , token,/* A property of the user model. */
+    role})
 }
