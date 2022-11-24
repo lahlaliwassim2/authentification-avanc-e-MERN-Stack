@@ -2,6 +2,7 @@
 
 
 Créeation des instructions dans mon Dockerfile:(documentation)
+
 -FROM  : Dans mon cas, je vais utiliser une image de base node;
 
 -WORKDIR : j'ais Utilisé ensuite l'instruction WORKDIR qui permet de modifier le répertoire courant;
