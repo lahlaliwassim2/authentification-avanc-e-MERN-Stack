@@ -7,7 +7,7 @@ Créeation des instructions dans mon Dockerfile:(documentation)
 
 -WORKDIR : j'ais Utilisé ensuite l'instruction WORKDIR qui permet de modifier le répertoire courant;
 
--RUN : qui vous permet d’exécuter des commandes dans votre conteneur ;
+-RUN : qui me permet d’exécuter des commandes dans mon conteneur ;
 
 -EXPOSE : qui permet de définir les ports d'écoute par défaut ;
 
@@ -22,6 +22,6 @@ J'ais executé un container basé sur l'image mongo, je l'ais nommé livraison-m
 
 Dans le dossier du serveur où se trouver Dockerfile j'ais crée l'image sous nom de livraison-marhaba-docker:test et j'ai fais un build avec la commande (docker build -t livraison-marhaba-docker:test .   )
 
-J'ai exécuté un container basé sur cette image que vous venez de créer, et je l'ais nommé livraison-marhaba et faites-le utiliser avec le network livraison-marhaba-net.(docker container run -d --name livraison-marhaba -v ${pwd}:/app -v /app/node_modules --network livraison-marhaba-net -p 80:80 livraison-marhaba-docker:test)
+J'ai exécuté un container basé sur cette image que je vien  de créer, et je l'ais nommé livraison-marhaba et faites-le utiliser avec le network livraison-marhaba-net.(docker container run -d --name livraison-marhaba -v ${pwd}:/app -v /app/node_modules --network livraison-marhaba-net -p 80:80 livraison-marhaba-docker:test)
 
 
