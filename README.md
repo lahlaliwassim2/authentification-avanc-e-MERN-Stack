@@ -1,27 +1,70 @@
 # authentification-avancé-MERN-Stack
 
+1-DOCKER
 
-Créeation des instructions dans mon Dockerfile:(documentation)
+Premiere etape 1 : L'instalation de  <a href="https://www.docker.com">Docker</a> sur Windows.
 
--FROM  : Dans mon cas, je vais utiliser une image de base node;
+Deusieme étape 2 :** L'instalation de  <a href="https://www.microsoft.com/store/productId/9P9TQF7MRM4R">Wsl 2</a> par  Microsoft Store.
 
--WORKDIR : j'ais Utilisé ensuite l'instruction WORKDIR qui permet de modifier le répertoire courant;
-
--RUN : qui me permet d’exécuter des commandes dans mon conteneur ;
-
--EXPOSE : qui permet de définir les ports d'écoute par défaut ;
-
--CMD : qui permet de définir la commande par défaut lors de l’exécution de vos conteneurs Docker.
+Troisieme étape 3 :** L'instalation de  <a href="https://www.microsoft.com/store/productId/9PDXGNCFSCZV">Ubuntu</a> par  Microsoft Store.
 
 
+**<-- Les étapes pour back-end -->**
+
+1**Créer un Dockerfile.**
 
 
-J'ais Crée un network, et j'ais lui donné le nom de livraison-marhaba-net par la commande ( docker network create  livraison-marhaba-net .  )
+Dockerfile Un Dockerfile est un fichier qui liste les instructions à exécuter pour build une image. Il est lu de haut en bas au cours du processus de build.
 
-J'ais executé un container basé sur l'image mongo, je l'ais nommé livraison-marhaba-db et je l'ais utilisé avec le network livraison-marhaba-net par la commande (docker container run -d --name livraison-marhaba-db -v livraison-marhaba-db:/data/db --network  livraison-marhaba-net mongo)
+        FROM node:16
+        WORKDIR /app
+        COPY package.json .
+        RUN npm install
+        COPY . ./
+        EXPOSE 9000
+        CMD ["npm", "start"]
+    
+2** Créer un network, et lui donner le nom de livraison-marhaba-back-end-net.
 
-Dans le dossier du serveur où se trouver Dockerfile j'ais crée l'image sous nom de livraison-marhaba-docker:test et j'ai fais un build avec la commande (docker build -t livraison-marhaba-docker:test .   )
+    docker network create livraison-marhaba-back-end-net
 
-J'ai exécuté un container basé sur cette image que je vien  de créer, et je l'ais nommé livraison-marhaba et faites-le utiliser avec le network livraison-marhaba-net.(docker container run -d --name livraison-marhaba -v ${pwd}:/app -v /app/node_modules --network livraison-marhaba-net -p 80:80 livraison-marhaba-docker:test)
+3**Étape :** Executez un container basé sur l'image mongo, nommez-le livraison-marhaba-back-end-db et faites-le utiliser avec le network livraison-marhaba-back-end-net.
+
+    docker container run -d --name livraison-marhaba-back-end-db -v livraison-marhaba-back-end-db:/data/db --network livraison-marhaba-back-end-net mongo
+
+4**Étape :** Entrer dans le dossier du serveur où se trouver Dockerfile et creer cette image et nommez-la livraison-marhaba-back-end-docker:test et faire un build.
+
+    docker build -t livraison-marhaba-back-end-docker:test .
+
+5**Étape :** Exécutez un container basé sur cette image que vous venez de créer, nommez-le livraison-marhaba-back-end et faites-le utiliser avec le network livraison-marhaba-back-end-net.
+
+    docker container run -d --name livraison-marhaba-back-end -v ${pwd}:/app -v /app/node_modules --network livraison-marhaba-back-end-net -p 9000:9000 livraison-marhaba-back-end-docker:test
+    
+
+**<-- Les étapes pour front-end -->**
+
+*1 :** Créer un Dockerfile.
+
+        FROM node:16
+        WORKDIR /views
+        COPY package.json .
+        RUN npm install
+        COPY . ./
+        EXPOSE 3000
+        CMD ["npm", "start"]
+
+*2 :** Créer un network, et lui donner le nom de livraison-marhaba-front-end-net.
+
+    docker network create livraison-marhaba-front-end-net
+
+*3 :** Entrer dans le dossier du serveur où se trouver Dockerfile et creer cette image et nommez-la livraison-marhaba-front-end-docker:test et faire un build.
+
+    docker build -t livraison-marhaba-front-end-docker:test .
+
+*4 :** Exécutez un container basé sur cette image que vous venez de créer, nommez-le livraison-marhabafront-end- et faites-le utiliser avec le network livraison-marhabafront-end--net.
+    
+    docker container run -d --name livraison-marhaba-front-end- -v ${pwd}:/app -v /app/node_modules --network livraison-marhaba-front-end-net -p 3000:3000 livraison-marhaba-front-end-docker:test
 
 
+
+    
