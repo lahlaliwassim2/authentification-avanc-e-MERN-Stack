@@ -16,6 +16,7 @@ const PrivateScreen = () => {
         }else{
             setRole("CLIENT")
         }
+    
         const fetchPrivateData = async () =>{
             const config = {
                 headers: {
@@ -33,7 +34,7 @@ const PrivateScreen = () => {
             }
         }
         fetchPrivateData()
-    })
+    }, [setRole])
 
     const logoutHandler = ()=>{
         localStorage.removeItem("authToken")

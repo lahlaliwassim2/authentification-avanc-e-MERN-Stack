@@ -30,7 +30,7 @@ try {
 
     navigate('/addlivreur')
 } catch (error) {
-    setError(error.response.data.error)
+    setError(error.response?.data?.error)
     setTimeout(()=>{
         setError("")
     },5000)
