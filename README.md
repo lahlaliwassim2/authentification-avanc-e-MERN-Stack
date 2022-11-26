@@ -14,7 +14,7 @@ Troisieme étape 3 :** L'instalation de  <a href="https://www.microsoft.com/stor
 1**Créer un Dockerfile.**
 
 
-Dockerfile Un Dockerfile est un fichier qui liste les instructions à exécuter pour build une image. Il est lu de haut en bas au cours du processus de build.
+ Dockerfile est un fichier qui liste les instructions à exécuter pour build une image. Il est lu de haut en bas au cours du processus de build.
 
         FROM node:16
         WORKDIR /app
