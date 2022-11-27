@@ -90,8 +90,8 @@ Troisieme étape 3 :** L'instalation de  <a href="https://www.microsoft.com/stor
     describe("Check your email to active your account", () => {
         test("Check your email to active your account", async () => {
             body = {
-                email: "Check_your_email@gmail.com",
-                password: "111"
+                email: "fauxEmail",
+                password: "fauxPwd"
             }
             const response = await request(app).post("/api/auth/login").send(body)
             expect(response.text).toBe('Check your email to active your account')
@@ -101,8 +101,8 @@ Troisieme étape 3 :** L'instalation de  <a href="https://www.microsoft.com/stor
     describe("Email or password is incorect", () => {
         test("Email or password is incorect", async () => {
             body = {
-                email: "client@gmail.com",
-                password: "sqjdlqjmdkùlkjl"
+                email: "wlahlali343@gmail.com",
+                password: "123456"
             }
             const response = await request(app).post("/api/auth/login").send(body)
             expect(response.text).toBe('Email or password is incorect')
