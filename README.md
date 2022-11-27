@@ -66,5 +66,64 @@ Dockerfile Un Dockerfile est un fichier qui liste les instructions à exécuter 
     docker container run -d --name livraison-marhaba-front-end- -v ${pwd}:/app -v /app/node_modules --network livraison-marhaba-front-end-net -p 3000:3000 livraison-marhaba-front-end-docker:test
 
 
+*****|------------------------ Testing ------------------------|*****
 
+**Étape 1 :** Installer la bibliothèque jest et supertest
+
+    npm i --save-dev jest supertest
+
+**Étape 2 :** Créer un tests.test.js
+    
+1-  Exiger supertest et index.js
+
+        const request = require('supertest');
+        const app = require('./index');
+
+2-  Créer la fonction describe(name, fn)
+
+    describe("POST /api/auth/login", () => {
+    let body = {
+        email: "",
+        password: ""
+    }
+    
+    describe("Check your email to active your account", () => {
+        test("Check your email to active your account", async () => {
+            body = {
+                email: "Check_your_email@gmail.com",
+                password: "111"
+            }
+            const response = await request(app).post("/api/auth/login").send(body)
+            expect(response.text).toBe('Check your email to active your account')
+        })
+    })
+
+    describe("Email or password is incorect", () => {
+        test("Email or password is incorect", async () => {
+            body = {
+                email: "client@gmail.com",
+                password: "sqjdlqjmdkùlkjl"
+            }
+            const response = await request(app).post("/api/auth/login").send(body)
+            expect(response.text).toBe('Email or password is incorect')
+        })
+    })
+
+    describe("Fill the all fields to login", () => {
+        test("Fill the all fields to login", async () => {
+            body = {
+                email: "",
+                password: ""
+            }
+            const response = await request(app).post("/api/auth/login").send(body)
+            expect(response.text).toBe('Fill the all fields to login')
+        })
+    })
+})
+
+3- A l'iterier de la fonction describe, crée trois test.
+    
+**Étape 3 :** Enfin, exécutez le test.
+
+    npm test
     
